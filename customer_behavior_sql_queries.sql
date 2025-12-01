@@ -87,3 +87,15 @@ FROM customer
 GROUP BY age_group
 ORDER BY total_revenue desc;
 
+--- Q11. What is the average time gap between purchases for repeat customers?
+SELECT customer_id, AVG(DATEDIFF(day, LAG(purchase_date) OVER (PARTITION BY customer_id ORDER BY purchase_date), purchase_date)) AS avg_gap_days
+FROM customer
+GROUP BY customer_id;
+
+--Q12. Which categories generate the highest revenue per order?
+SELECT category, ROUND(SUM(purchase_amount)/COUNT(customer_id),2) AS revenue_per_order
+FROM customer
+GROUP BY category
+ORDER BY revenue_per_order DESC;
+
+--Q13. 
